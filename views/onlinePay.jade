@@ -1,0 +1,42 @@
+extend layout
+block content
+  form(name="onlinePayComplaint" method="post" action="/onlinePayComplaintRegistrationForm")
+    p Transaction ID
+      br
+      input(type="text" name="transactionID")
+    p Type of Payment
+      br
+      select(name="Payment Mode")
+        option(value="debit") Debit Card
+        option(value="credit") Credit Card
+        option(value="netBanking") Net Banking
+    p Issue Bank
+      br
+      select(name="Payer Domain")
+        option(value="ICICI") ICICI
+        option(value="SBI") SBI
+        option(value="AXIS") AXIS BANK
+        option(value="YES") YES BANK
+        option(value="HDFC") HDFC BANK
+    p Merchant
+      br
+      select(name="Payee Domain")
+        option(value="amazon") amazon.in
+        option(value="flipkart") flipkart.com
+        option(value="swiggy") swiggy.com
+        option(value="foodpanda") foodpanda.com
+        option(value="irctc") irctc.co.in
+    p Payment Gateway
+      br
+      select(name="Gateway")
+        option(value="payu") Payu Biz / Payu Money
+        option(value="razor") Razorpay
+        option(value="citrus") Citrus Pay
+        option(value="ebilldesk") e-Bill Desk
+    p Error Code
+      br
+      input(type="number" name="errorCode")
+    p Error Description
+      br
+      input(type="text" name="errorText")
+    input(type="submit")

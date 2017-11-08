@@ -1,0 +1,29 @@
+extend layout
+block content
+  form(name="eWalletComplaint" method="post" action="/eWalletComplaintRegistrationForm")
+    p Transaction ID
+      br
+      input(type="text" name="transactionID")
+    p Wallet Provider
+      br
+      select(name="Wallet Domain")
+        option(value="paytm") Paytm
+        option(value="freecharge") freecharge
+        option(value="mobikwik") MobiKwik
+        option(value="phonepe") PhonePe
+        option(value="amazonpay") Amazon Pay
+    p Merchant
+      br
+      select(name="Payee Domain")
+        option(value="amazon") amazon.in
+        option(value="flipkart") flipkart.com
+        option(value="swiggy") swiggy.com
+        option(value="foodpanda") foodpanda.com
+        option(value="irctc") irctc.co.in
+    p Error Code
+      br
+      input(type="number" name="errorCode")
+    p Error Description
+      br
+      input(type="text" name="errorText")
+    input(type="submit")

@@ -1,0 +1,33 @@
+extend layout
+block content
+  form(name="upiComplaint" method="post" action="/upiComplaintRegistrationForm")
+    p Transaction ID
+      br
+      input(type="text" name="transactionID")
+    p Error Code
+      br
+      input(type="number" name="errorCode")
+    p Error Description
+      br
+      input(type="text" name="errorText")
+    p Payer Domain
+      br
+      select(name="Payer Domain")
+        option(value="ICICI") @icici
+        option(value="ICICI") @okicici
+        option(value="SBI") @sbi
+        option(value="AXIS") @axisbank
+        option(value="YES") @ybl
+        option(value="BHIM") @upi
+        option(value="HDFC") @hdfc
+    p Payee Domain
+      br
+      select(name="Payee Domain")
+        option(value="ICICI") @icici
+        option(value="ICICI") @okicici
+        option(value="SBI") @sbi
+        option(value="AXIS") @axisbank
+        option(value="YES") @ybl
+        option(value="BHIM") @upi
+        option(value="HDFC") @hdfc
+    input(type="submit")
