@@ -24,7 +24,7 @@ connection.connect(function(err) {
 //       if (err) throw err
 //   }
   
-//   connection.query('INSERT INTO Complaint VALUES("A001","user1","TXN001","Paytm","ICIC","payumoney","141","connection dropped",false)')
+//   connection.query('INSERT INTO ComplainVALUES("A001","user1","TXN001","Paytm","ICIC","payumoney","141","connection dropped",false)')
 //   {
 //       if (err) throw err
 //   }
@@ -116,9 +116,9 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
     //check for validity of values
     //skip for now. TODO
     complaintID = 0;
-    if(req.body.transactionID && req.body.source && req.body.destination && req.body.gateway && req.body.errorCode && req.body.errorText && req.body.timestamp)
+    if(req.body.transactionID && req.body.source && req.body.destination && req.body.gateway && req.body.errorCode && req.body.errorText )
     {
-        connection.query('INSERT INTO Complaint \
+        connection.query('INSERT INTO Complain\
         (UserId,TransationId,Source,Destination,gateway,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
         [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.gateway, req.body.errorCode, req.body.errorText, req.body.timestamp],
@@ -129,7 +129,7 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
     else
     {
         console.log("Not complete data");
-        res.render('index',
+        return res.render('index',
             {title:'Index'});
     }
     
@@ -146,7 +146,7 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
                 if(score < 96)
                 {
                     console.log("Issue advisory to " + req.body.source);
-                    // connection.query('INSERT INTO ERRORLOG (entity,)')
+                    // connection.query('INSERT INTO ErrorLog (entity,time,message) VALUES()');
                 }
             })
     }
@@ -184,7 +184,7 @@ app.post('/eWalletComplaintRegistrationForm', function(req,res){
     
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
-        connection.query('INSERT INTO Complaint \
+        connection.query('INSERT INTO Complain\
         (UserId,TransationId,Source,Destination,gateway,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
         [userId, req.body.transactionID, req.body.source, req.body.destination, "" , req.body.errorCode, req.body.errorText, req.body.timestamp],
@@ -234,7 +234,7 @@ app.post('/posPayComplaintRegistrationForm', function(req,res){
     //skip for now. TODO
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
-        connection.query('INSERT INTO Complaint \
+        connection.query('INSERT INTO Complain\
         (UserId,TransationId,Source,Destination,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
         [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
@@ -285,7 +285,7 @@ app.post('/upiPayComplaintRegistrationForm', function(req,res){
     //skip for now. TODO
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
-        connection.query('INSERT INTO Complaint \
+        connection.query('INSERT INTO Complain\
         (UserId,TransationId,Source,Destination,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
         [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
