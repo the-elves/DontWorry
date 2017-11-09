@@ -19,7 +19,7 @@ block content
         option(value="netBanking") Net Banking
     p Issue Bank
       br
-      select(name="Payer Domain")
+      select(name="source")
         option(value="ICIC") ICICI
         option(value="SBIN") SBI
         option(value="AXIS") AXIS BANK
@@ -27,7 +27,7 @@ block content
         option(value="HDFC") HDFC BANK
     p Merchant
       br
-      select(name="Payee Domain")
+      select(name="destination")
         option(value="amazon") amazon.in
         option(value="flipkart") flipkart.com
         option(value="swiggy") swiggy.com
@@ -35,7 +35,7 @@ block content
         option(value="irctc") irctc.co.in
     p Payment Gateway
       br
-      select(name="Gateway")
+      select(name="gateway")
         option(value="payu") Payu Biz / Payu Money
         option(value="razor") Razorpay
         option(value="citrus") Citrus Pay

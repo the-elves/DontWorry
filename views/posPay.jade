@@ -1,0 +1,30 @@
+extend layout
+block content
+  h6 Point of Sale Details
+  form(name="posdetails", method="post", action="/posPayComplaintDetails")
+    p TransactionID
+      input(name="transactionID", type="text")
+    p Card Provider
+      select(name="CardProvider")
+        option(value="ICIC") ICICI
+        option(value="AXIS") AXIS BANK
+        option(value="HDFC") HDFC BANK
+    p ErrorID
+      input(name="ErrorId", type="text")
+    p Bank
+      br
+      select(name="source")
+        option(value="ICIC") ICICI
+        option(value="SBIN") SBI
+        option(value="AXIS") AXIS BANK
+        option(value="YESB") YES BANK
+        option(value="HDFC") HDFC BANK
+    p Merchant
+      br
+      select(name="destination")
+        option(value="amazon") amazon.in
+        option(value="flipkart") flipkart.com
+        option(value="swiggy") swiggy.com
+        option(value="foodpanda") foodpanda.com
+        option(value="irctc") irctc.co.in
+    input(type="submit")
