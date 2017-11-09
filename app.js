@@ -19,7 +19,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err
   console.log('You are now connected...')
-//   connection.query('INSERT INTO Source VALUES("Paytm","Paytm","www.paytm.com/contactus","www.paytm.com","100","care@paytm.com","100","care@cvc.co.in")')
+//   connection.query('INSERT INTO Entity VALUES("Paytm","Paytm","www.paytm.com/contactus","www.paytm.com","100","care@paytm.com","100","care@cvc.co.in")')
 //   {
 //       if (err) throw err
 //   }
@@ -106,8 +106,8 @@ app.post('/complaintRegistration', function(req, res){
 });
 
 function incrementScore(){
-    connection.query('UPDATE Source SET Score=Score+0.1 WHERE Score<100');
-    connection.query('UPDATE Destination SET Score=Score+0.1 WHERE Score<100');
+    connection.query('UPDATE Entity SET Score=Score+0.1 WHERE Score<100');
+    // connection.query('UPDATE Entity SET Score=Score+0.1 WHERE Score<100');
     connection.query('UPDATE GateWay SET Score=Score+0.1 WHERE Score<100');
     
 }
@@ -115,13 +115,16 @@ function incrementScore(){
 app.post('/onlinePayComplaintRegistrationForm', function(req,res){
     //check for validity of values
     //skip for now. TODO
+    complaintID = 0;
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.gateway && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
         connection.query('INSERT INTO Complaint \
         (UserId,TransationId,Source,Destination,gateway,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.gateway, req.body.errorCode, req.body.errorText, req.body.timestamp])
-        {}
+        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.gateway, req.body.errorCode, req.body.errorText, req.body.timestamp],
+    function(err, result){
+        complaintID = result.complaintID;
+    })
     }
     else
     {
@@ -134,22 +137,25 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
     if(req.body.source)
     {
         console.log(req.body.source);
-            connection.query('UPDATE Source SET Score=Score-1 WHERE code=?',[req.body.source])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.source])
             {
                 // if(err) throw err
             }
-            connection.query('SELECT Score FROM Source WHERE code=?',[req.body.source],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.source],function(err,score){
                 if(err) throw err
                 if(score < 96)
+                {
                     console.log("Issue advisory to " + req.body.source);
+                    // connection.query('INSERT INTO ERRORLOG (entity,)')
+                }
             })
     }
-    if(req.body.destination)
+    if(req.body.destination && req.body.destination != req.body.source)
     {
-            connection.query('UPDATE Destination SET Score=Score-1 WHERE code=?',[req.body.destination])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.destination])
             {
             }
-            connection.query('SELECT Score FROM Destination WHERE code=?',[req.body.destination],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.destination],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to" + req.body.destination);
@@ -168,8 +174,8 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
             })
     }
     
-    res.render('index',
-        {title:'Index'});
+    res.render('result',
+        {title:'Response',complaintID:complaintID,responseText:responseText});
 })
 
 app.post('/eWalletComplaintRegistrationForm', function(req,res){
@@ -181,8 +187,10 @@ app.post('/eWalletComplaintRegistrationForm', function(req,res){
         connection.query('INSERT INTO Complaint \
         (UserId,TransationId,Source,Destination,gateway,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, "" , req.body.errorCode, req.body.errorText, req.body.timestamp])
-        {}
+        [userId, req.body.transactionID, req.body.source, req.body.destination, "" , req.body.errorCode, req.body.errorText, req.body.timestamp],
+        function(err, result){
+            complaintID = result.complaintID;
+        })
     }
     else
     {
@@ -194,30 +202,30 @@ app.post('/eWalletComplaintRegistrationForm', function(req,res){
     if(req.body.source)
     {
         console.log(req.body.source);
-            connection.query('UPDATE Source SET Score=Score-1 WHERE code=?',[req.body.source])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.source])
             {
                 // if(err) throw err
             }
-            connection.query('SELECT Score FROM Source WHERE code=?',[req.body.source],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.source],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to " + req.body.source);
             })
     }
-    if(req.body.destination)
+    if(req.body.destination && req.body.destination != req.body.source)
     {
-            connection.query('UPDATE Destination SET Score=Score-1 WHERE code=?',[req.body.destination])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.destination])
             {
             }
-            connection.query('SELECT Score FROM Destination WHERE code=?',[req.body.destination],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.destination],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to" + req.body.destination);
             })
     }
 
-    res.render('index',
-        {title:'Index'});
+    res.render('result',
+    {title:'Response',complaintID:complaintID,responseText:responseText});
 })
 
 
@@ -229,8 +237,10 @@ app.post('/posPayComplaintRegistrationForm', function(req,res){
         connection.query('INSERT INTO Complaint \
         (UserId,TransationId,Source,Destination,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp])
-        {}
+        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
+        function(err, result){
+            complaintID = result.complaintID;
+        })
     }
     else
     {
@@ -243,30 +253,30 @@ app.post('/posPayComplaintRegistrationForm', function(req,res){
     if(req.body.source)
     {
         console.log(req.body.source);
-            connection.query('UPDATE Source SET Score=Score-1 WHERE code=?',[req.body.source])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.source])
             {
                 // if(err) throw err
             }
-            connection.query('SELECT Score FROM Source WHERE code=?',[req.body.source],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.source],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to " + req.body.source);
             })
     }
-    if(req.body.destination)
+    if(req.body.destination && req.body.destination != req.body.source)
     {
-            connection.query('UPDATE Destination SET Score=Score-1 WHERE code=?',[req.body.destination])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.destination])
             {
             }
-            connection.query('SELECT Score FROM Destination WHERE code=?',[req.body.destination],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.destination],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to" + req.body.destination);
             })
     }
 
-    res.render('index',
-        {title:'Index'});
+    res.render('result',
+    {title:'Response',complaintID:complaintID,responseText:responseText});
 })
 
 
@@ -278,8 +288,10 @@ app.post('/upiPayComplaintRegistrationForm', function(req,res){
         connection.query('INSERT INTO Complaint \
         (UserId,TransationId,Source,Destination,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp])
-        {}
+        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
+        function(err, result){
+            complaintID = result.complaintID;
+        })
     }
     else
     {
@@ -292,30 +304,30 @@ app.post('/upiPayComplaintRegistrationForm', function(req,res){
     if(req.body.source)
     {
         console.log(req.body.source);
-            connection.query('UPDATE Source SET Score=Score-1 WHERE code=?',[req.body.source])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.source])
             {
                 // if(err) throw err
             }
-            connection.query('SELECT Score FROM Source WHERE code=?',[req.body.source],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.source],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to " + req.body.source);
             })
     }
-    if(req.body.destination)
+    if(req.body.destination && req.body.destination != req.body.source)
     {
-            connection.query('UPDATE Destination SET Score=Score-1 WHERE code=?',[req.body.destination])
+            connection.query('UPDATE Entity SET Score=Score-1 WHERE code=?',[req.body.destination])
             {
             }
-            connection.query('SELECT Score FROM Destination WHERE code=?',[req.body.destination],function(err,score){
+            connection.query('SELECT Score FROM Entity WHERE code=?',[req.body.destination],function(err,score){
                 if(err) throw err
                 if(score < 96)
                     console.log("Issue advisory to" + req.body.destination);
             })
     }
 
-    res.render('index',
-        {title:'Index'});
+    res.render('result',
+    {title:'Response',complaintID:complaintID,responseText:responseText});
 })
 
 
