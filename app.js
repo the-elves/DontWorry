@@ -21,5 +21,11 @@ app.get('/', function(req, res){
     res.render('index',
 	       {title:'Home'}
 	      )
-})
+});
+
+app.post('/complaintRegistration', function(req, res){
+    res.render('complaintRegistration',
+	       {title:'Home'}
+	      )
+});
 app.listen(3000)

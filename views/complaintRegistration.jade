@@ -1,0 +1,23 @@
+extend layout
+block content
+  h6 Point of Sale Details
+  form(name="posdetails", method="post", action="/posComplaintDetails")
+    p TransactionID
+      input(name="transactionID", type="text")
+    p Card Provider
+      input(name="CardProvider", type="text")
+    p ErrorID
+      input(name="ErrorId", type="text")
+    p Bank
+      br
+      select(name="bank")
+        option(value="ICICI") ICICI
+        option(value="SBI") SBI
+        option(value="HDFC") HDFC
+    p Merchant
+      br
+      select(name="merchant")
+        option(value="flipkart") Flipkart
+        option(value="amazon") Amazon
+        option(value="bigbasket") BigBasket
+    input(type="submit")

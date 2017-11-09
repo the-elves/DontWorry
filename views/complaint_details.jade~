@@ -1,0 +1,13 @@
+extend layout
+block content
+  h1 Point of Sale Details
+  form(name="posdetails", method="post", action="/posComplaintDetails")
+    input(name="transactionID" type="text)
+    input(name="Card Provider" type="text)
+    input(name="ErrorId" type="text)
+    select(name="bank")
+      option(value="ICICI") ICICI
+      option(value="SBI") SBI
+      option(value="HDFC") HDFC
+    input(type="submit")
+          
