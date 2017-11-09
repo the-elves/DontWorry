@@ -4,6 +4,13 @@ block content
     p Transaction ID
       br
       input(type="text" name="transactionID")
+    p Date
+      br
+      input#datepicker(type="text" name="date")
+    p Time
+      br
+      input#timepicker(type="text" name="time")
+      input#timestamp(name="timestamp" type="hidden")
     p Wallet Provider
       br
       select(name="Wallet Domain")

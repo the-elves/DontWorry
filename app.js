@@ -9,8 +9,8 @@ var mysql = require('mysql')
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: 'root',
+  user: 'phpmyadmin',
+  password: 'phpmyadmin',
   database: 'DontWorry'
 })
 
@@ -65,8 +65,8 @@ app.post('/complaintRegistration', function(req, res){
 	res.render('pos_details',
 		   {title:'Point of Sale'}
 		  )
-    }	
-    
+    }
+
 });
 
 app.listen(3000)

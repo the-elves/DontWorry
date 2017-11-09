@@ -4,6 +4,13 @@ block content
   form(name="posdetails", method="post", action="/posComplaintDetails")
     p TransactionID
       input(name="transactionID", type="text")
+    p Date
+      br
+      input#datepicker(type="text" name="date")
+    p Time
+      br
+      input#timepicker(type="text" name="time")
+      input#timestamp(name="timestamp" type="hidden")
     p Card Provider
       input(name="CardProvider", type="text")
     p ErrorID
