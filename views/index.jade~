@@ -1,0 +1,30 @@
+extend layout
+block content
+  form(name="complaintForm", method="post", action="/complaintRegistration")
+    p Name:
+      br
+      input(type="text" name="name")
+    p Aadhaar Id:
+      br
+      input(type="text" name="aadhaar")
+    p Age:
+      br
+      input(type="text" name="age")
+    p Phone No:
+      br
+      input(type="text" name="phone")
+    p E - mail
+      br
+      input(type="text" name="email")
+    p Payment Category
+      br
+      select(name="category")
+        option(value"eWallet")
+          eWallet
+        option(value"online")
+          Online Payment
+        option(value"upi")
+          UPI
+        option(value"pos")
+          Point of Sale Terminal
+    input(type="submit")

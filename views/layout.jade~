@@ -1,0 +1,15 @@
+doctype
+1html
+  head
+    title #{title} - My Site
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      h1 Dont Worry
+    .container
+      .main-content
+        block content
+      .sidebar
+        block sidebar
+    footer
+      p Running on node with Express, Jade and Stylus
