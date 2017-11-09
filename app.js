@@ -30,6 +30,7 @@ connection.connect(function(err) {
 //   }
 })
 
+errorList={1:"DO NOT USE MERCHANT X", 2:"SBI Servers are Down"}
 
 app.set('views', __dirname+'/views')
 app.set('view engine', 'jade')
@@ -48,7 +49,7 @@ app.get('/', function(req, res){
     setInterval(incrementScore,60000);
     res.render('index',
 	       {title:'Home',
-		list:{'1':'one', '2':'two'}
+		list:errorList
 	       }
 	      )
 
@@ -151,7 +152,7 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
         ["1", req.body.transactionID, req.body.source, req.body.destination, req.body.gateway, req.body.errorCode, req.body.errorText, req.body.timestamp],
     function(err, result){
         if(err) throw err
-        complaintID = result.complaintID;
+        complaintID = result.idComplain;
     })
     }
     else
@@ -218,7 +219,7 @@ app.post('/eWalletComplaintRegistrationForm', function(req,res){
         ["1", req.body.transactionID, req.body.source, req.body.destination, "" , req.body.errorCode, req.body.errorText, req.body.timestamp],
         function(err, result){
             if(err) throw err;
-            complaintID = result.complaintID;
+            complaintID = result.idComplain;
         })
     }
     else
@@ -268,7 +269,7 @@ app.post('/posPayComplaintRegistrationForm', function(req,res){
         VALUES(?,?,?,?,?,?,?,?)',
         ["1", req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
         function(err, result){
-            complaintID = result.complaintID;
+            complaintID = result.idComplain;
         })
     }
     else
@@ -319,7 +320,7 @@ app.post('/upiPayComplaintRegistrationForm', function(req,res){
         VALUES(?,?,?,?,?,?,?,?)',
         ["1", req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
         function(err, result){
-            complaintID = result.complaintID;
+            complaintID = result.idComplain;
         })
     }
     else
