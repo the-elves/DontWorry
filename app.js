@@ -119,10 +119,11 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.gateway && req.body.errorCode && req.body.errorText )
     {
         connection.query('INSERT INTO Complain\
-        (UserId,TransationId,Source,Destination,gateway,errorCode,errorText,timestamp) \
+        (UserId,TransactionId,Source,Destination,gateway,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.gateway, req.body.errorCode, req.body.errorText, req.body.timestamp],
+        ["1", req.body.transactionID, req.body.source, req.body.destination, req.body.gateway, req.body.errorCode, req.body.errorText, req.body.timestamp],
     function(err, result){
+        if(err) throw err
         complaintID = result.complaintID;
     })
     }
@@ -168,14 +169,14 @@ app.post('/onlinePayComplaintRegistrationForm', function(req,res){
             {
             }
             connection.query('SELECT Score FROM GateWay WHERE code=?',[req.body.gateway],function(err,score){
-                if(err) throw err
+                if(err) throw err;
                 if(score < 96)
                     console.log("Issue advisory to" + req.body.gateway);
             })
     }
     
     res.render('result',
-        {title:'Response',complaintID:complaintID,responseText:responseText});
+        {title:'Response',complaintID:complaintID,responseText:"responseText"});
 })
 
 app.post('/eWalletComplaintRegistrationForm', function(req,res){
@@ -185,10 +186,11 @@ app.post('/eWalletComplaintRegistrationForm', function(req,res){
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
         connection.query('INSERT INTO Complain\
-        (UserId,TransationId,Source,Destination,gateway,errorCode,errorText,timestamp) \
+        (UserId,TransactionId,Source,Destination,gateway,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, "" , req.body.errorCode, req.body.errorText, req.body.timestamp],
+        ["1", req.body.transactionID, req.body.source, req.body.destination, "" , req.body.errorCode, req.body.errorText, req.body.timestamp],
         function(err, result){
+            if(err) throw err;
             complaintID = result.complaintID;
         })
     }
@@ -225,7 +227,7 @@ app.post('/eWalletComplaintRegistrationForm', function(req,res){
     }
 
     res.render('result',
-    {title:'Response',complaintID:complaintID,responseText:responseText});
+    {title:'Response',complaintID:complaintID,responseText:"responseText"});
 })
 
 
@@ -235,9 +237,9 @@ app.post('/posPayComplaintRegistrationForm', function(req,res){
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
         connection.query('INSERT INTO Complain\
-        (UserId,TransationId,Source,Destination,errorCode,errorText,timestamp) \
+        (UserId,TransactionId,Source,Destination,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
+        ["1", req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
         function(err, result){
             complaintID = result.complaintID;
         })
@@ -276,7 +278,7 @@ app.post('/posPayComplaintRegistrationForm', function(req,res){
     }
 
     res.render('result',
-    {title:'Response',complaintID:complaintID,responseText:responseText});
+    {title:'Response',complaintID:complaintID,responseText:"responseText"});
 })
 
 
@@ -286,9 +288,9 @@ app.post('/upiPayComplaintRegistrationForm', function(req,res){
     if(req.body.transactionID && req.body.source && req.body.destination && req.body.errorCode && req.body.errorText && req.body.timestamp)
     {
         connection.query('INSERT INTO Complain\
-        (UserId,TransationId,Source,Destination,errorCode,errorText,timestamp) \
+        (UserId,TransactionId,Source,Destination,errorCode,errorText,timestamp) \
         VALUES(?,?,?,?,?,?,?,?)',
-        [userId, req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
+        ["1", req.body.transactionID, req.body.source, req.body.destination, req.body.errorCode, req.body.errorText, req.body.timestamp],
         function(err, result){
             complaintID = result.complaintID;
         })
@@ -327,7 +329,7 @@ app.post('/upiPayComplaintRegistrationForm', function(req,res){
     }
 
     res.render('result',
-    {title:'Response',complaintID:complaintID,responseText:responseText});
+    {title:'Response',complaintID:complaintID,responseText:"responseText"});
 })
 
 
