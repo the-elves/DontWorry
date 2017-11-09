@@ -21,6 +21,7 @@ app.get('/', function(req, res){
     res.render('index',
 	       {title:'Home'}
 	      )
+
 });
 
 app.post('/complaintRegistration', function(req, res){
@@ -28,4 +29,22 @@ app.post('/complaintRegistration', function(req, res){
 	       {title:'Home'}
 	      )
 });
+
+app.get('/upi', function(req, res){
+    res.render('upi',
+	       {title:'UPI'}
+	      )
+})
+
+app.get('/onlinePay', function(req, res){
+    res.render('onlinePay',
+	       {title:'Online Payment'}
+	      )
+})
+
+app.get('/eWallet', function(req, res){
+    res.render('eWallet',
+	       {title:'e-Wallet Payment'}
+	      )
+})
 app.listen(3000)
