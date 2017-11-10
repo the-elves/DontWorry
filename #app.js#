@@ -32,9 +32,15 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(req, res){
+    var list;
+    var advQuery = "select * from ErrorLog";
+    connection.query(advQuery, function(err, result, fields){
+	list = result;
+
+    });
     res.render('index',
 	       {title:'Home',
-		list:{'1':'one', '2':'two'}
+		list:advisories
 	       }
 	      )
 
@@ -53,7 +59,6 @@ app.post('/complaintRegistration', function(req, res){
 	console.log(result);
 	if(err) throw err;
 	if(result.length == 0){
-	    console.log('length0');
 	    queryStr = "insert into User (name, age,phone, email, aadhaarid) values ("+
 		"'" +name + "',"+
 		"" +age + ","+
