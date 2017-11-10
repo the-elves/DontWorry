@@ -4,6 +4,13 @@ block content
     p Transaction ID
       br
       input(type="text" name="transactionID")
+    p Date
+      br
+      input#datepicker(type="text" name="date")
+    p Time
+      br
+      input#timepicker(type="text" name="time")
+      input#timestamp(name="timestamp" type="hidden")
     p Type of Payment
       br
       select(name="Payment Mode")
@@ -12,7 +19,7 @@ block content
         option(value="netBanking") Net Banking
     p Issue Bank
       br
-      select(name="Payer Domain")
+      select(name="source")
         option(value="ICIC") ICICI
         option(value="SBIN") SBI
         option(value="AXIS") AXIS BANK
@@ -20,19 +27,17 @@ block content
         option(value="HDFC") HDFC BANK
     p Merchant
       br
-      select(name="Payee Domain")
-        option(value="amazon") amazon.in
-        option(value="flipkart") flipkart.com
-        option(value="swiggy") swiggy.com
-        option(value="foodpanda") foodpanda.com
-        option(value="irctc") irctc.co.in
+      select(name="destination")
+        option(value="AMZN") amazon.in
+        option(value="FLIP") flipkart.com
+        option(value="IRCT") irctc.co.in
     p Payment Gateway
       br
-      select(name="Gateway")
+      select(name="gateway")
         option(value="payu") Payu Biz / Payu Money
-        option(value="razor") Razorpay
-        option(value="citrus") Citrus Pay
-        option(value="ebilldesk") e-Bill Desk
+        option(value="razo") Razorpay
+        option(value="citr") Citrus Pay
+        option(value="ebil") e-Bill Desk
     p Error Code
       br
       input(type="number" name="errorCode")

@@ -1,6 +1,6 @@
 extend layout
 block content
-  form(name="upiComplaint" method="post" action="/upiComplaintRegistrationForm")
+  form(name="upiComplaint" method="post" action="/upiPayComplaintRegistrationForm")
     p Transaction ID
       br
       input(type="text" name="transactionID")
@@ -12,7 +12,7 @@ block content
       input(type="text" name="errorText")
     p Payer Domain
       br
-      select(name="Payer Domain")
+      select(name="source")
         option(value="ICIC") @icici
         option(value="ICIC") @okicici
         option(value="SBIN") @sbi
@@ -22,7 +22,7 @@ block content
         option(value="HDFC") @hdfc
     p Payee Domain
       br
-      select(name="Payee Domain")
+      select(name="destination")
         option(value="ICIC") @icici
         option(value="ICIC") @okicici
         option(value="SBIN") @sbi
